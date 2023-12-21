@@ -50,8 +50,8 @@ const onSelect = (option) => {
 
 const insertScript = () => {
   const scripts = [
-    "https://unpkg.com/dayjs@1.8.21/dayjs.min.js",
-    "https://cdn.bootcdn.net/ajax/libs/qs/6.11.1/qs.min.js",
+    "https://fastly.jsdelivr.net/npm/qs@6.11.1/dist/qs.js",
+    "https://fastly.jsdelivr.net/npm/dayjs@1.8.21/dayjs.min.js",
   ];
   scripts.forEach((item) => {
     const script = document.createElement("script");
@@ -102,11 +102,13 @@ onMounted(() => {
 </script>
 
 <style lang="less">
-.bubble {
-  width: 30px;
-  height: 30px;
-  .van-floating-bubble__icon {
-    font-size: 16px;
+.van-floating-bubble {
+  &.bubble {
+    width: 30px;
+    height: 30px;
+    .van-floating-bubble__icon {
+      font-size: 16px;
+    }
   }
 }
 </style>

@@ -1,8 +1,10 @@
 import { createApp } from 'vue';
 import App from './App.vue';
-import 'vant/es/dialog/style';
+import 'vant/lib/index.css';
 
-createApp(App).mount(
+const app = createApp(App);
+app.use(vant)
+app.mount(
   (() => {
     const app = document.createElement('div');
     document.body.append(app);
