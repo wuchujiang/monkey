@@ -10,7 +10,7 @@
       axis="xy"
       v-model:offset="offset"
       icon="setting-o"
-      @click="showShare = true"
+      @click="showShare = !showShare"
     />
     <van-share-sheet
       style="font-size: 24px"
@@ -41,6 +41,7 @@ const showBubble = ref(true);
 const options = [
   { name: "打印链接参数", icon: "flower-o", key: "search" },
   { name: "清除缓存", icon: "flower-o", key: "clear" },
+  { name: "显示Vue Devtool", icon: "flower-o", key: "devtool" },
   { name: "隐藏工具按钮", icon: "flower-o", key: "hide" },
 ];
 
@@ -55,6 +56,9 @@ const onSelect = (option) => {
       break;
     case "hide":
       hideHandle();
+      break;
+    case "devtool":
+      showVueDevtool();
       break;
     default:
     //
@@ -107,6 +111,34 @@ const clearHandle = () => {
 };
 const hideHandle = () => {
   showBubble.value = false;
+};
+
+const showVueDevtool = () => {
+  var app, walker, node;
+  walker = document.createTreeWalker(document.body, 1);
+  while ((node = walker.nextNode())) {
+    if (node.__vue_app__ || node.__vue__) {
+      app = node;
+      break;
+    }
+  }
+  // vue 3
+  if (app.__vue_app__) {
+    const hook = unsafeWindow["__VUE_DEVTOOLS_GLOBAL_HOOK__"];
+    hook.emit("app:init", app.__vue_app__, app.__vue_app__.version, {
+      Fragment: "Fragment",
+      Text: "Text",
+      Comment: "Comment",
+      Static: "Static",
+    });
+  } else if (app.__vue__) {
+    // vue 2
+    __VUE_DEVTOOLS_GLOBAL_HOOK__.emit(
+      "init",
+      (app.__vue__.__proto__.__proto__.constructor.config.devtools = true) &&
+        app.__vue__.__proto__.__proto__.constructor
+    );
+  }
 };
 
 onMounted(() => {
