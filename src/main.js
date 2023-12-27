@@ -7,7 +7,9 @@ app.use(vant)
 app.mount(
   (() => {
     const app = document.createElement('div');
+    app.id = '_monkey_app_';
+    const shadowRoot = app.attachShadow({ mode: 'open' });
     document.body.append(app);
-    return app;
+    return shadowRoot;
   })(),
 );

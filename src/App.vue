@@ -6,7 +6,9 @@
       class="bubble"
       v-if="showBubble"
       :gap="0"
+      :teleport="el"
       axis="xy"
+      v-model:offset="offset"
       icon="setting-o"
       @click="showShare = true"
     />
@@ -21,8 +23,19 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from "vue";
+import { getCurrentInstance, onMounted, ref } from "vue";
+const offset = ref({
+  x: window.innerWidth - 50,
+  y: window.innerHeight - 50,
+});
+onMounted(() => {
+  if (window.innerWidth > 500) {
+    showBubble.value = false;
+  }
+});
+const app = getCurrentInstance();
 
+const el = (window.$appEl = app.appContext.app._container);
 const showShare = ref(false);
 const showBubble = ref(true);
 const options = [
