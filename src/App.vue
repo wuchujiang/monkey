@@ -119,6 +119,7 @@ onMounted(() => {
   &.bubble {
     width: 30px;
     height: 30px;
+    z-index: 11111111111;
     .van-floating-bubble__icon {
       font-size: 16px;
     }
